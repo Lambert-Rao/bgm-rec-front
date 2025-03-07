@@ -1,0 +1,11 @@
+.anime-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 0.7rem;
+  padding: 0.7rem;
+  width: 80vw;
+}
+
+.anime-list .anime {
+  scale: 0.9;
+}

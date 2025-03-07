@@ -1,0 +1,9 @@
+.feature1 {
+  padding: 2rem;
+}
+
+.simAni {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

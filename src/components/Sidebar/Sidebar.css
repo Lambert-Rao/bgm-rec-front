@@ -1,0 +1,30 @@
+.sidebar {
+  width: 15%;
+  height: 100vh; /* Occupies the full viewport height */
+  position: fixed; /* Fixed to the left side of the screen */
+  top: 0;
+  left: 0;
+  background-color: #f4f4f4; /* Background color */
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  font-size: 1.5vw; /* Font size adjusts with viewport width */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  height: 10vh; /* Fixed height */
+  display: flex;
+  align-items: center; /* Vertically centered */
+  justify-content: center; /* Horizontally centered */
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+.sidebar li.selected {
+  background-color: #00796b; /* Highlight color */
+  color: #ffffff; /* Text color for highlighted item */
+}

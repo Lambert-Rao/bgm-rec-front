@@ -1,0 +1,134 @@
+.anime {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  background-color: #e0f7fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  height: 80%;
+  word-wrap: break-word;
+}
+
+.anime:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.anime-thumbnail {
+  width: 200px;
+  height: auto;
+  margin-right: 1rem;
+  border-radius: 8px;
+}
+
+.anime-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-details h2 {
+  color: #00796b; /* Color for name */
+}
+
+.anime-details h3 {
+  color: #004d40; /* Color for name_cn */
+}
+
+.anime-metatags {
+  margin: 0.5rem 0;
+}
+
+.anime-meta-tag {
+  display: inline-block;
+  background-color: #b2ebf2;
+  color: #00796b;
+  padding: 0.2rem 0.5rem;
+  margin: 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.anime-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.spacer {
+  flex: 0 0 20%;
+}
+
+.anime-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.anime-link:hover {
+  color: inherit; /* Ensure font color does not change on hover */
+}
+
+.anime-link .anime {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  background-color: #e0f7fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-height: 100%;
+  word-wrap: break-word;
+}
+
+.anime-link .anime:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.anime-link .anime-thumbnail {
+  width: 200px;
+  height: auto;
+  margin-right: 1rem;
+  border-radius: 8px;
+}
+
+.anime-link .anime-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-link .anime-details h2 {
+  color: #00796b; /* Color for name */
+}
+
+.anime-link .anime-details h3 {
+  color: #004d40; /* Color for name_cn */
+}
+
+.anime-link .anime-metatags {
+  margin: 0.5rem 0;
+}
+
+.anime-link .anime-meta-tag {
+  display: inline-block;
+  background-color: #b2ebf2;
+  color: #00796b;
+  padding: 0.2rem 0.5rem;
+  margin: 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.anime-link .anime-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.anime-link .spacer {
+  flex: 0 0 20%;
+}

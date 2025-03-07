@@ -1,0 +1,87 @@
+.anime-banner {
+  background-color: #e0f7fa;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  margin: 0 auto;
+  transition: transform 0.5s ease-in-out, min-height 0.5s ease-in-out; /* 添加动画效果 */
+  min-width: 1000px;
+  min-height: 400px; /* 设置最小高度 */
+}
+
+.anime-banner.expanded {
+  transform: scale(1.1); /* 放大效果 */
+}
+.anime-banner input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #fff; /* Initial background color is white */
+}
+
+.anime-banner input.loading {
+  transition: background-color 1.5s linear; /* Gradual change */
+}
+
+.anime-banner-details {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* Fade-in effect */
+  display: flex;
+  flex-direction: row; /* Align elements horizontally */
+  justify-content: center; /* Center align horizontally */
+  align-items: center; /* Center align vertically */
+}
+
+.anime-banner-details.visible {
+  opacity: 1;
+}
+
+.anime-banner-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center align vertically */
+  align-items: center; /* Center align horizontally */
+  text-align: center; /* Center align text */
+}
+
+.anime-banner-thumbnail {
+  max-height: 40vh;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.anime-banner-details h2 {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.anime-banner-details h3 {
+  font-size: 1.2rem;
+  color: #00796b;
+  margin: 0.5rem 0;
+}
+
+.anime-banner-metatags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.anime-banner-meta-tag {
+  background-color: #b2ebf2;
+  color: #00796b;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  margin: 0.2rem;
+}
+
+.anime-banner-details p {
+  font-size: 1rem;
+  color: #004d40;
+}
