@@ -2,10 +2,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-console.log('Starting server script...');
-
 const app = express();
 const dbUrl = process.env.MONGODB_URL; // Get the database URL from environment variables
+// const dbUrl = 'mongodb://arch.me:27017/bangumi'; // Use a local database for now
 const db = mongoose.createConnection(dbUrl);
 
 db.on('error', (error) => {
@@ -17,9 +16,8 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-app.get('/anime/sim/:id', async (req, res) => {
+app.get('/api/anime/sim/:id', async (req, res) => {
   const { id } = req.params;
-  // console.log(`Received request for anime_id: ${id}`);
 
   try {
     const collection = db.collection('sim');
@@ -35,11 +33,6 @@ app.get('/anime/sim/:id', async (req, res) => {
     console.error('Error fetching data:', error);
     res.status(500).send('Error fetching data');
   }
-});
-
-const PORT = 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;
