@@ -1,0 +1,9 @@
+.feature2 {
+  padding: 2rem;
+}
+
+.UserPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

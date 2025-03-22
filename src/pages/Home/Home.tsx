@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import './Home.css';
 import Feature1 from '../Feature/SimAni';
-import Feature2 from '../Feature/None';
+import Feature2 from '../Feature/UserPage';
 import Feature3 from '../Feature/None';
 import Feature4 from '../Feature/None';
 

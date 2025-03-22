@@ -26,7 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelectFeature }) => {
               className={selectedFeature === 'feature2' ? 'selected' : ''}
               onClick={() => handleSelectFeature('feature2')}
           >
-            没做
+            用户个性化推荐
           </li>
           <li
               className={selectedFeature === 'feature3' ? 'selected' : ''}
