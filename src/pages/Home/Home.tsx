@@ -4,7 +4,7 @@ import './Home.css';
 import Feature1 from '../Feature/SimAni';
 import Feature2 from '../Feature/UserPage';
 import Feature3 from '../Feature/None';
-import Feature4 from '../Feature/None';
+import Feature4 from '../Feature/Info';
 
 const Home: React.FC = () => {
   const [currentFeature, setCurrentFeature] = useState<string>('feature1');

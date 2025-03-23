@@ -85,3 +85,50 @@
   font-size: 1rem;
   color: #004d40;
 }
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.search-result-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid rgba(221, 221, 221, 0.72);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.search-result-item:hover {
+  background-color: #a0e9f1;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.search-result-item:hover img {
+  opacity: 0.8;
+}
+
+.result-info {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.chinese-name {
+  font-weight: bold;
+}
+
+.original-name {
+  color: #41465e;
+  font-size: 0.9em;
+}

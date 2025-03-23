@@ -11,26 +11,18 @@ const SimAni: React.FC = () => {
   useEffect(() => {
     const fetchAnimeIds = async () => {
       try {
-        // const response = await fetch(`http://localhost:5000/api/anime/sim/${submittedId}`);
         const response = await fetch(`${window.location.origin}/api/anime/sim/${submittedId}`);
+
         if (response.ok) {
-          const contentType = response.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const ids = await response.json();
-            setAnimeIds(ids);
-            setIsNotAnime(false);
-          } else {
-            const text = await response.text();
-            console.error('Unexpected response format:', text);
-          }
+          const ids = await response.json();
+          setAnimeIds(ids);
+          setIsNotAnime(false);
         } else if (response.status === 404) {
           setIsNotAnime(true);
           setAnimeIds([]);
-        } else {
-          console.error('Error fetching data:', response.statusText);
         }
       } catch (error) {
-        console.error('Error connecting to the server:', error);
+        console.error('Error:', error);
       }
     };
 
@@ -42,22 +34,21 @@ const SimAni: React.FC = () => {
   const handleIdSubmit = (id: number) => {
     if (!isNaN(id)) {
       setSubmittedId(id);
-    } else {
-      console.error('Submitted ID is not a number');
     }
   };
 
   return (
       <div className="simAni">
         <AnimeBanner onIdSubmit={handleIdSubmit} />
+
         {submittedId === null ? (
             <h1>请输入动画ID</h1>
         ) : isNotAnime ? (
             <h1>并非动画</h1>
         ) : (
             <>
-              <h2>由于深度学习的不可预测性，可能出现莫名其妙的条目，属于正常现象，毕设项目完结前会尽量优化，敬请谅解</h2>
               <h1>喜欢该动画的用户也喜欢：</h1>
+              <h2>由于深度学习的不可预测性，可能出现莫名其妙的条目，属于正常现象，毕设项目完结前会尽量优化，敬请谅解</h2>
               <AnimeList ids={animeIds} />
             </>
         )}

@@ -93,7 +93,6 @@ const UserBanner: React.FC<UserProps> = ({ onIdSubmit }) => {
               <div className="user-banner-info">
                 <h2>{userData.nickname}</h2>
                 <h3>{userData.sign}</h3>
-                <p>用户总结与统计正在制作中</p>
               </div>
             </div>
         )}

@@ -8,6 +8,7 @@
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
   font-size: 1.5vw; /* Font size adjusts with viewport width */
+  transition: background-color 0.3s ease-in-out;
 }
 
 .sidebar ul {
@@ -22,9 +23,16 @@
   justify-content: center; /* Horizontally centered */
   margin: 1rem 0;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.sidebar li:hover {
+  background-color: #e0f7fa; /* Hover background color */
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 .sidebar li.selected {
-  background-color: #00796b; /* Highlight color */
+  background-color: #11aae6; /* Highlight color */
   color: #ffffff; /* Text color for highlighted item */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect for selected item */
 }

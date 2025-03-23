@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -6,7 +6,11 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ onSelectFeature }) => {
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<string | null>('feature1');
+
+  useEffect(() => {
+    onSelectFeature('feature1');
+  }, [onSelectFeature]);
 
   const handleSelectFeature = (feature: string) => {
     setSelectedFeature(feature);
@@ -38,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelectFeature }) => {
               className={selectedFeature === 'feature4' ? 'selected' : ''}
               onClick={() => handleSelectFeature('feature4')}
           >
-            没做
+            相关信息
           </li>
         </ul>
       </div>

@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+// AnimeBanner.tsx
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import './AnimeBanner.css';
 
 interface AnimeData {
+  id: number;
   name: string;
   name_cn: string;
   images: { small: string, common: string, large: string, grid: string, medium: string };
@@ -10,95 +12,150 @@ interface AnimeData {
   summary: string;
 }
 
+interface SearchResult {
+  id: number;
+  name: string;
+  name_cn: string;
+  image: string;
+}
+
+interface SearchResultData {
+  id: number;
+  name: string;
+  name_cn: string;
+  images: { large: string };
+}
+
 interface AnimeBannerProps {
-  onIdSubmit: (id: number) => void;
+  onIdSubmit: (id: number) => void; // 修改为只接收数字ID
 }
 
 const AnimeBanner: React.FC<AnimeBannerProps> = ({ onIdSubmit }) => {
-  const [id, setId] = useState<number | string>('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [animeData, setAnimeData] = useState<AnimeData | null>(null);
-  const [imageSrc, setImageSrc] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (id !== '') {
-      const signalTimeout = setTimeout(() => {
-        console.log('External signal with id:', id);
-        onIdSubmit(Number(id)); // Call the callback function with the input ID
-      }, 1000);
+  const fetchSearchResults = async (keyword: string) => {
+    try {
+      const encodedKeyword = encodeURIComponent(keyword);
+      const response = await axios.get(
+          `https://api.bgm.tv/search/subject/${encodedKeyword}?type=2&responseGroup=small&max_results=12`
+      );
 
-      return () => clearTimeout(signalTimeout);
+      if (response.data.list) {
+        const results = response.data.list.map((item: SearchResultData) => ({
+          id: item.id,
+          name: item.name,
+          name_cn: item.name_cn || item.name,
+          image: item.images?.large || '',
+        }));
+        setSearchResults(results);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+      setSearchResults([]);
     }
-  }, [id, onIdSubmit]);
+  };
 
-  const fetchAnimeData = (animeId: number) => {
+  const fetchAnimeData = async (animeId: number) => {
     setLoading(true);
-    axios.get(`https://api.bgm.tv/v0/subjects/${animeId}`)
-    .then(response => {
-      setAnimeData(response.data);
-      setImageSrc(response.data.images.large);
-      setIsVisible(true); // Show the details with fade-in effect
-    })
-    .catch(error => {
+    try {
+      const response = await axios.get(`https://api.bgm.tv/v0/subjects/${animeId}`);
+      const data = response.data;
+      setAnimeData({ ...data, id: animeId });
+      setIsVisible(true);
+      onIdSubmit(animeId); // 提交选中的ID
+    } catch (error) {
       console.error('Error fetching anime data:', error);
-    })
-    .finally(() => {
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-    const inputElement = e.target;
-    inputElement.style.backgroundColor = '#fff'; // Reset to white immediately
-    inputElement.classList.remove('loading'); // Remove transition class
-    setIsVisible(false); // Hide the details
+    const value = e.target.value;
+    setInputValue(value);
+    setSearchResults([]);
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    if (fetchTimeoutRef.current) {
-      clearTimeout(fetchTimeoutRef.current);
-    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    timeoutRef.current = setTimeout(() => {
-      inputElement.classList.add('loading'); // Add transition class
-      inputElement.style.backgroundColor = '#e0f7fa'; // Gradually change to background color
-
-      // Clear previous data before fetching new data
+    timeoutRef.current = setTimeout(async () => {
+      // 新增：重置动画信息和可见状态
       setAnimeData(null);
-      setImageSrc('');
+      setIsVisible(false);
 
-      fetchTimeoutRef.current = setTimeout(() => {
-        fetchAnimeData(Number(e.target.value));
-      }, 1000);
-    }, 1000);
+      // 处理数字ID输入
+      const id = parseInt(value, 10);
+      if (!isNaN(id)) {
+        await fetchAnimeData(id);
+        return;
+      }
+
+      // 处理文本搜索
+      if (value.trim().length > 0) {
+        setLoading(true);
+        try {
+          await fetchSearchResults(value);
+        } finally {
+          setLoading(false);
+        }
+      }
+    }, 500);
+  };
+
+  const handleSelectResult = async (result: SearchResult) => {
+    setInputValue(result.name_cn || result.name);
+    setSearchResults([]);
+    await fetchAnimeData(result.id);
   };
 
   return (
       <div className={`anime-banner ${isVisible ? 'expanded' : ''}`}>
-        <input
-            type="text"
-            value={id}
-            onChange={handleInputChange}
-            placeholder="Enter Anime ID"
-        />
-        {loading && <p>Loading...</p>}
+        <div className="search-container">
+          <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder="输入动画ID或名称"
+              className="search-input"
+          />
+
+          {loading && <div className="loading-indicator">搜索中...</div>}
+
+          {searchResults.length > 0 && (
+              <div className="search-results">
+                {searchResults.map(result => (
+                    <div
+                        key={result.id}
+                        className="search-result-item"
+                        onClick={() => handleSelectResult(result)}
+                    >
+                      <img src={result.image} alt={result.name_cn} />
+                      <div className="result-info">
+                        <div className="chinese-name">{result.name_cn}</div>
+                        <div className="original-name">{result.name}</div>
+                      </div>
+                    </div>
+                ))}
+              </div>
+          )}
+        </div>
+
         {animeData && (
             <div className={`anime-banner-details ${isVisible ? 'visible' : ''}`}>
-              <img src={imageSrc} alt={animeData.name} className="anime-banner-thumbnail" />
-              <div className="anime-banner-info">
-                <h2>{animeData.name}</h2>
-                <h3>{animeData.name_cn}</h3>
-                <div className="anime-banner-metatags">
-                  {animeData.meta_tags.map(meta_tag => (
-                      <span key={meta_tag} className="anime-banner-meta-tag">{meta_tag}</span>
+              <img src={animeData.images.large} alt={animeData.name} className="anime-thumbnail" />
+              <div className="anime-info">
+                <h2>{animeData.name_cn || animeData.name}</h2>
+                {animeData.name_cn && <h3>{animeData.name}</h3>}
+                <div className="meta-tags">
+                  {animeData.meta_tags.map(tag => (
+                      <span key={tag} className="tag">{tag}</span>
                   ))}
                 </div>
-                <p>{animeData.summary}</p>
+                <p className="summary">{animeData.summary}</p>
               </div>
             </div>
         )}
