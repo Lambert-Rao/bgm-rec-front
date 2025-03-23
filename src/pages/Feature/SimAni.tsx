@@ -42,13 +42,13 @@ const SimAni: React.FC = () => {
         <AnimeBanner onIdSubmit={handleIdSubmit} />
 
         {submittedId === null ? (
-            <h1>请输入动画ID</h1>
+            <h1>请输入动画ID或名称进行搜索</h1>
         ) : isNotAnime ? (
             <h1>并非动画</h1>
         ) : (
             <>
               <h1>喜欢该动画的用户也喜欢：</h1>
-              <h2>由于深度学习的不可预测性，可能出现莫名其妙的条目，属于正常现象，毕设项目完结前会尽量优化，敬请谅解</h2>
+              <h3>由于深度学习的不可预测性，可能出现莫名其妙的条目，属于正常现象，毕设项目完结前会尽量优化，敬请谅解</h3>
               <AnimeList ids={animeIds} />
             </>
         )}

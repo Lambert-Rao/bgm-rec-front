@@ -150,9 +150,9 @@ const AnimeBanner: React.FC<AnimeBannerProps> = ({ onIdSubmit }) => {
               <div className="anime-info">
                 <h2>{animeData.name_cn || animeData.name}</h2>
                 {animeData.name_cn && <h3>{animeData.name}</h3>}
-                <div className="meta-tags">
+                <div className="anime-banner-metatags">
                   {animeData.meta_tags.map(tag => (
-                      <span key={tag} className="tag">{tag}</span>
+                      <span key={tag} className="anime-banner-meta-tag">{tag}</span>
                   ))}
                 </div>
                 <p className="summary">{animeData.summary}</p>
