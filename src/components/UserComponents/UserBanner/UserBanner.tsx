@@ -17,12 +17,25 @@ interface UserProps {
 
 const UserBanner: React.FC<UserProps> = ({ onIdSubmit }) => {
   const [id, setId] = useState<number | null>(null);
+  const [userInputId, setUserInputId] = useState<string>('');
   const [userData, setUserData] = useState<UserData | null>(null);
   const [imageSrc, setImageSrc] = useState<string>('');
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const savedUserInputId = localStorage.getItem('userInputId');
+    const savedId = localStorage.getItem('userId');
+    if (savedUserInputId) {
+      setUserInputId(savedUserInputId);
+    }
+    if (savedId) {
+      setId(Number(savedId));
+      fetchUserData(savedUserInputId || '');
+    }
+  }, []);
 
   useEffect(() => {
     if (id !== null) {
@@ -43,6 +56,8 @@ const UserBanner: React.FC<UserProps> = ({ onIdSubmit }) => {
       setId(response.data.id);
       setImageSrc(response.data.avatar.large);
       setIsVisible(true); // Show the details with fade-in effect
+      localStorage.setItem('userId', response.data.id.toString()); // Save numeric user ID to localStorage
+      localStorage.setItem('userInputId', userIdInput); // Save user input string ID to localStorage
     })
     .catch(error => {
       console.error('Error fetching user data:', error);
@@ -54,6 +69,8 @@ const UserBanner: React.FC<UserProps> = ({ onIdSubmit }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputElement = e.target;
+    const inputValue = inputElement.value;
+    setUserInputId(inputValue);
     inputElement.style.backgroundColor = '#fff'; // Reset to white immediately
     inputElement.classList.remove('loading'); // Remove transition class
     setIsVisible(false); // Hide the details
@@ -74,7 +91,7 @@ const UserBanner: React.FC<UserProps> = ({ onIdSubmit }) => {
       setImageSrc('');
 
       fetchTimeoutRef.current = setTimeout(() => {
-        fetchUserData(e.target.value);
+        fetchUserData(inputValue);
       }, 1000);
     }, 1000);
   };
@@ -85,6 +102,7 @@ const UserBanner: React.FC<UserProps> = ({ onIdSubmit }) => {
             type="text"
             onChange={handleInputChange}
             placeholder="Enter User ID"
+            value={userInputId}
         />
         {loading && <p>Loading...</p>}
         {userData && (
