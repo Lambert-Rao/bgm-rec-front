@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { BangumiCollection } from '../types';
+import './Decade.css';
 
 const getDecade = (dateString: string): string => {
   const year = new Date(dateString).getFullYear();
@@ -30,6 +31,13 @@ const calculateDecadeDistribution = (collections: BangumiCollection[]): Record<s
   return distribution;
 };
 
+const getOldestAnime = (collections: BangumiCollection[]): { name: string, year: number } => {
+  const oldest = collections.reduce((oldest, item) => {
+    return new Date(item.subject.date) < new Date(oldest.subject.date) ? item : oldest;
+  }, collections[0]);
+  return { name: oldest.subject.name, year: new Date(oldest.subject.date).getFullYear() };
+};
+
 const DecadeRadarChart: React.FC<{ data: BangumiCollection[] }> = ({ data }) => {
   const chartRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +48,7 @@ const DecadeRadarChart: React.FC<{ data: BangumiCollection[] }> = ({ data }) => 
 
       const option = {
         title: {
-          text: 'Decade Distribution of Collected Works'
+          text: '看过的动画的年代分布',
         },
         tooltip: {},
         radar: {
@@ -63,7 +71,16 @@ const DecadeRadarChart: React.FC<{ data: BangumiCollection[] }> = ({ data }) => 
     }
   }, [data]);
 
-  return <div ref={chartRef} style={{ width: '600px', height: '400px' }} />;
+  const oldestAnime = getOldestAnime(data);
+
+  return (
+      <div className="chart-container">
+        <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
+        <div className="oldest-anime">
+          你看过的最老动画是: {oldestAnime.name} ({oldestAnime.year})
+        </div>
+      </div>
+  );
 };
 
 export default DecadeRadarChart;

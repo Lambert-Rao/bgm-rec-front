@@ -5,10 +5,11 @@ export interface BangumiCollection {
   updated_at: string;
   subject: {
     id: number;
+    name: string;
     name_cn: string;
     date: string;
     score: number;
-    tags: { name: string }[];
+    tags: { name: string,count:number }[];
     eps: number;
     type: number; // 1=书籍 2=动画 3=音乐等
     rank: number;
