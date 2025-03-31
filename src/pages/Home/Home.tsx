@@ -3,7 +3,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import './Home.css';
 import Feature1 from '../Feature/SimAni';
 import Feature2 from '../Feature/UserPage';
-import Feature3 from '../Feature/None';
+import Feature3 from '../Feature/UserStatitics';
 import Feature4 from '../Feature/Info';
 
 const Home: React.FC = () => {

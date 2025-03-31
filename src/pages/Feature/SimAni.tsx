@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SimAni.css';
-import AnimeList from '../../components/AnimeList/AnimeList';
-import AnimeBanner from '../../components/AnimeBanner/AnimeBanner';
+import AnimeBanner from "../../components/AnimeComponents/AnimeBanner/AnimeBanner.tsx";
+import AnimeList from "../../components/AnimeComponents/AnimeList/AnimeList.tsx";
 
 const SimAni: React.FC = () => {
   const [animeIds, setAnimeIds] = useState<number[]>([]);

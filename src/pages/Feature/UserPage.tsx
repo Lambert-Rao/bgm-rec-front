@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UserPage.css';
-import AnimeList from '../../components/AnimeList/AnimeList';
-import UserBanner from '../../components/UserBanner/UserBanner';
+import UserBanner from "../../components/UserComponents/UserBanner/UserBanner.tsx";
+import AnimeList from "../../components/AnimeComponents/AnimeList/AnimeList.tsx";
 
 const UserPage: React.FC = () => {
   const [animeIds, setAnimeIds] = useState<number[]>([]);
